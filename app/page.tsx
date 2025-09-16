@@ -1,5 +1,8 @@
+"use client"
 import React, { useState } from 'react';
 import { Search, Menu, X, ShoppingCart, Heart, User, ChevronDown } from 'lucide-react';
+import Image from 'next/image';
+import logo from "@/public/logo.svg"
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,9 +22,9 @@ const Home = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">👑</span>
-              </div>
+                <div className="w-10 h-10 p-2 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center">
+                  <Image src={logo} alt='logo image' height={30} width={30} />
+                </div>
               <span className="text-white text-xl font-bold">DigitalEstates</span>
             </div>
 
@@ -197,15 +200,15 @@ const Home = () => {
       </nav>
 
       {/* Hero Section */}
-      <main className="flex-1">
+      <main className="flex-1 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center py-16 sm:py-24 lg:py-32">
+          <div className="text-center py-16 sm:py-24 ">
             <div className="space-y-8">
               {/* Main Heading */}
               <div className="space-y-4">
-                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold">
-                  <span className="block text-white">Premium</span>
-                  <span className="block bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-600 bg-clip-text text-transparent">
+                <h1 className="font-display font-semibold text-6xl md:text-7xl lg:text-8xl text-slate-900 mb-8 leading-none">
+                  <span className="block text-[#0F172A]">Premium</span>
+                  <span className="block text-[#DFA928] ">
                     Domains
                   </span>
                 </h1>
@@ -213,37 +216,13 @@ const Home = () => {
 
               {/* Subtitle */}
               <div className="max-w-4xl mx-auto">
-                <p className="text-lg sm:text-xl lg:text-2xl text-slate-300 leading-relaxed">
+                <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
                   Discover premium domain names that define the future of digital real 
                   estate. Your perfect digital address awaits.
                 </p>
               </div>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-                <button className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold rounded-lg hover:from-yellow-300 hover:to-orange-400 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                  Browse Premium Domains
-                </button>
-                <button className="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-slate-600 text-white font-semibold rounded-lg hover:border-yellow-400 hover:text-yellow-400 transition-all duration-300">
-                  Learn More
-                </button>
-              </div>
 
-              {/* Stats or Features */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-16 max-w-4xl mx-auto">
-                <div className="text-center">
-                  <div className="text-3xl sm:text-4xl font-bold text-yellow-400 mb-2">10K+</div>
-                  <div className="text-slate-400">Premium Domains</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl sm:text-4xl font-bold text-yellow-400 mb-2">50+</div>
-                  <div className="text-slate-400">TLD Extensions</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl sm:text-4xl font-bold text-yellow-400 mb-2">24/7</div>
-                  <div className="text-slate-400">Expert Support</div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -252,7 +231,7 @@ const Home = () => {
       {/* Footer Section */}
       <footer className="bg-slate-900 border-t border-slate-700 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
@@ -260,45 +239,36 @@ const Home = () => {
                 </div>
                 <span className="text-white font-bold">DigitalEstates</span>
               </div>
-              <p className="text-slate-400 text-sm">
-                Your trusted partner for premium domain investments and digital real estate solutions.
+              <p className="text-slate-400 text-lg leading-relaxed max-w-md">
+          Your trusted marketplace for premium domain names. Discover, acquire, and invest in digital real estate.
               </p>
             </div>
+       
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Services</h3>
-              <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Domain Search</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Domain Valuation</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Domain Parking</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Transfer Services</a></li>
+              <h3 className="text-white font-semibold mb-4">Contact</h3>
+              <ul className="space-y-2 text-slate-400 text-base">
+                <li><a href="#" className="hover:text-white transition-colors">hello@digitalestates.com
+</a></li>
+   
               </ul>
             </div>
             
             <div>
-              <h3 className="text-white font-semibold mb-4">Support</h3>
-              <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact Support</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">API</a></li>
-              </ul>
-            </div>
+              <h3 className="text-white font-semibold mb-4">Follow Us</h3>
+              <ul className="space-y-2 text-slate-400 text-base">
+                <li className='flex gap-x-6'><a href="#" className="hover:text-white  flex transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter w-5 h-5" data-filename="layout" data-linenumber="444" data-visual-selector-id="layout444" data-source-location="layout:444:18" data-dynamic-content="false"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                  <span className='block ml-2'>Follow us on X</span>
+                  </a></li>
             
-            <div>
-              <h3 className="text-white font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Press</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
               </ul>
             </div>
           </div>
           
           <div className="border-t border-slate-700 mt-8 pt-8 text-center">
-            <p className="text-slate-400 text-sm">
-              © 2025 DigitalEstates. All rights reserved.
+            <p className="text-slate-400 text-sm md:text-base">
+              © 2025 DigitalEstates. Premium domains for exceptional brands.
             </p>
           </div>
         </div>
