@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
+import NoDomainsFound from "./componenets/NoDomaineFound";
 
 const Home = () => {
   return (
     <div className="min-h-screen ">
       {/* Hero Section */}
-      <main className="flex-1 bg-white">
+      <main className="flex-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center py-16 sm:py-24 ">
             <div className="space-y-8">
@@ -19,7 +20,7 @@ const Home = () => {
 
               {/* Subtitle */}
               <div className="max-w-4xl mx-auto">
-                <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                <p className="text-base font-thin md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
                   Discover premium domain names that define the future of
                   digital real estate. Your perfect digital address awaits.
                 </p>
@@ -27,7 +28,9 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <NoDomainsFound/>
       </main>
+
     </div>
   );
 };
