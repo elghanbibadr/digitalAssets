@@ -27,7 +27,8 @@ body {
 }
 
 body{
-  @apply bg-gray-100
+  @apply bg-[#F8FAFC]
+  
 }
 
 
@@ -54,3 +55,22 @@ body{
   }
 }
 
+@layer components{
+  h3{
+    @apply text-xl font-semibold text-slate-900 mb-2
+  }
+}
+
+
+@layer components {
+  input{
+    @apply text-slate-700 px-4 flex w-full rounded-md border  md:text-sm mt-2 h-11
+  }
+}
+
+
+@layer components{
+  label{
+    @apply text-sm text-black/90  font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+  }
+}
