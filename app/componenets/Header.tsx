@@ -44,7 +44,7 @@ const Header = () => {
     contact: [
       { 
         label: 'Support Center', 
-        href: '/contact/support',
+        href: '/contact',
         description: 'Get help and answers to your questions.',
         icon: <ArrowRight className="w-4 h-4" />
       },

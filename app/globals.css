@@ -37,7 +37,7 @@ body{
 
 @layer components {
   h1 {
-    @apply font-semibold text-black text-5xl md:text-6xl mb-6;
+    @apply font-semibold text-slate-900 text-5xl md:text-6xl mb-6;
   }
 }
 

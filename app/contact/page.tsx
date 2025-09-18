@@ -9,19 +9,19 @@ const Contact = () => {
     <div>
 
           {/* Support Center Section */}
-      <section className="py-20 ">
-        <div className=" mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6">
+      <section className=" ">
+        <div className=" mx-auto   px-6">
+          <div className="text-center bg-white py-20 mb-16">
+            <h1 >
               Support Center
-            </h2>
-            <p className="text-xl text-slate-600 max-w-4xl mx-auto">
+            </h1>
+            <p className="subtitle">
               We're here to help you make the most of your experience with Domain Parking. Our team 
               is ready to support you.
             </p>
           </div>
 
-          <div className="mb-20 py-10 px-6 bg-[#F8FAFC]">
+          <div className="mb-20 py-10 px-6 ">
             <h3 className="text-3xl font-bold text-center text-slate-800 mb-12">
               How We Can Help
             </h3>
@@ -72,35 +72,33 @@ const Contact = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-10 bg-white">
-        <div className="container mx-auto px-6">
+      <section className="py-16 bg-white">
+        <div className=" mx-auto px-6 md:px-10">
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-16 items-start">
               {/* Contact Info */}
               <div>
-                <h2 className="text-4xl font-bold text-slate-800 mb-6">
+                <h1 className="text-4xl font-bold text-slate-800 mb-6">
                   Get in Touch
-                </h2>
-                <p className="text-lg text-slate-600 mb-8">
+                </h1>
+                <p className=" text-slate-600 mb-8">
                   Fill out the form or use one of the methods below to contact us. Our 
                   team typically responds within 24-48 hours, Monday through Friday.
                 </p>
                 
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <Mail className="w-6 h-6 text-blue-600" />
-                    </div>
+                    <span className='block' >
+                    📧
+                    </span>
                     <div>
                       <span className="font-semibold text-slate-800">Email:</span>
-                      <span className="text-slate-600 ml-2">support@domainparking.com</span>
+                      <span className="text-slate-600 ml-2">support@namevault.com</span>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                      <Phone className="w-6 h-6 text-red-600" />
-                    </div>
+                       <span className='block'>📞</span>
                     <div>
                       <span className="font-semibold text-slate-800">Phone:</span>
                       <span className="text-slate-600 ml-2">+1 (800) 555-0199</span>
