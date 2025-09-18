@@ -95,7 +95,7 @@ export default function LoginForm() {
 
         {/* Sign Up Link */}
         <div className="text-center text-gray-600 mb-4">
-          Don't have an account?{' '}
+          Don`&apos;t have an account?{' '}
           <button
             onClick={handleSignUp}
             className="text-gray-900 font-medium hover:underline"

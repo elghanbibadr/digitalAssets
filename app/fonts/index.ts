@@ -19,6 +19,11 @@ export const amazonEmber = localFont({
     },
     {
       path: '../../public/amazon-ember/Amazon Ember Mono Bold.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../public/amazon-ember/Amazon Ember Mono Bold.ttf',
       weight: '700',
       style: 'normal',
     },

@@ -1,5 +1,5 @@
 "use client"
-import { Search, Menu, X, ShoppingCart, Heart, User, ChevronDown } from 'lucide-react';
+import { Search, Menu, X, ShoppingCart, Heart, User, ChevronDown, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -17,32 +17,46 @@ const Header = () => {
 
   const closeDropdown = () => setActiveDropdown(null);
 
-  // Navigation data
+  // Enhanced navigation data with descriptions
   const dropdownMenus = {
     buy: [
-      { label: 'Browse Domains', href: '/domains/browse' },
-      { label: 'Premium Domains', href: '/domains/premium' },
-      { label: 'New Releases', href: '/domains/new' }
+      { 
+        label: 'Premium domains marketplace', 
+        href: '/premiummarketplace',
+        description: 'Explore 500,000+ expert-curated, brandable domains to elevate your business.',
+        icon: <ArrowRight className="w-4 h-4" />
+      },
+      { 
+        label: 'Domain bundle', 
+        href: '/domainbundles',
+        description: 'Purchase related domains together at sale prices.',
+        icon: <ArrowRight className="w-4 h-4" />
+      },
     ],
     sell: [
-      { label: 'List Your Domain', href: '/sell/list' },
-      { label: 'Seller Dashboard', href: '/sell/dashboard' },
-      { label: 'Pricing Guide', href: '/sell/pricing' }
+      { 
+        label: 'Contact us', 
+        href: '/sellwithus',
+        description: 'Submit your premium domains for review by your acquisitions team.',
+        icon: <ArrowRight className="w-4 h-4" />
+      },
     ],
     contact: [
-      { label: 'Support', href: '/contact/support' },
-      { label: 'Sales Inquiry', href: '/contact/sales' },
-      { label: 'Partnership', href: '/contact/partnership' }
+      { 
+        label: 'Support Center', 
+        href: '/contact/support',
+        description: 'Get help and answers to your questions.',
+        icon: <ArrowRight className="w-4 h-4" />
+      },
     ]
   };
 
   const mainNavItems = [
-    { label: 'Park Domains', href: '/park' },
+    { label: 'Park Domains', href: '/domainparking' },
   ];
 
   const rightNavItems = [
     { label: 'Newsletter', href: '/newsletter' },
-    { label: 'About us', href: '/about' }
   ];
 
   // Components
@@ -97,22 +111,36 @@ const Header = () => {
     </div>
   );
 
-  const DropdownMenu = ({ items, isOpen, position = "left" }) => {
+  const EnhancedDropdownMenu = ({ items, isOpen, position = "left" }) => {
     if (!isOpen) return null;
     
-    const positionClass = position === "right" ? "right-0" : "left-0";
+    const positionClass = position === "right" ? "right-10" : "-left-4";
     
     return (
-      <div className={`absolute top-full ${positionClass} mt-1 w-48 bg-slate-800 border border-slate-600 rounded-lg shadow-lg z-10`}>
-        <div className="py-2">
+      <div className={`absolute top-full ${positionClass} z-50 min-w-[8rem] overflow-hidden text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 w-80 bg-white border border-slate-200 rounded-lg shadow-lg p-0`}>
+        <div className="py-3">
           {items.map((item, index) => (
             <Link
               key={index}
               href={item.href}
               onClick={closeDropdown}
-              className="block px-4 py-2 text-xs font-medium text-slate-200 hover:text-white hover:bg-slate-700 transition-colors"
+              className="group block px-2 py-1 hover:bg-gray-50 transition-all duration-200 border-b border-gray-100 last:border-b-0"
             >
-              {item.label}
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center  mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900  transition-colors">
+                      {item.label}
+                    </h3>
+                    <div className="text-black mx-2">
+                      {item.icon}
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
             </Link>
           ))}
         </div>
@@ -127,9 +155,11 @@ const Header = () => {
         className="flex items-center space-x-1 text-slate-300 hover:text-white transition-colors py-2"
       >
         <span className="text-sm font-semibold">{label}</span>
-        <ChevronDown className="w-4 h-4" />
+        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${
+          activeDropdown === dropdownKey ? 'rotate-180' : ''
+        }`} />
       </button>
-      <DropdownMenu 
+      <EnhancedDropdownMenu 
         items={items} 
         isOpen={activeDropdown === dropdownKey} 
         position={position}
@@ -171,14 +201,16 @@ const Header = () => {
                 {key === 'buy' ? 'Buy Domains' : key === 'sell' ? 'Sell Domains' : 'Contact'}
               </div>
               {items.map((item, index) => (
-                <Link
-                  key={index}
-                  href={item.href}
-                  className="block py-2 px-4 text-slate-300 hover:text-white hover:bg-slate-700 rounded transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
+                <div key={index} className="bg-slate-700/50 rounded-lg mx-2 mb-2">
+                  <Link
+                    href={item.href}
+                    className="block p-3 text-slate-300 hover:text-white transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <div className="font-medium mb-1">{item.label}</div>
+                    <div className="text-xs text-slate-400">{item.description}</div>
+                  </Link>
+                </div>
               ))}
             </div>
           ))}
@@ -209,8 +241,23 @@ const Header = () => {
     </div>
   );
 
+  // Close dropdown when clicking outside
+  const handleOverlayClick = () => {
+    if (activeDropdown) {
+      closeDropdown();
+    }
+  };
+
   return (
     <div>
+      {/* Overlay for closing dropdowns */}
+      {activeDropdown && (
+        <div 
+          className="fixed inset-0 z-40" 
+          onClick={handleOverlayClick}
+        />
+      )}
+
       {/* Header */}
       <header className="bg-[#0F172A] backdrop-blur-sm border-b border-slate-700/50 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -247,7 +294,7 @@ const Header = () => {
       </header>
 
       {/* Navigation */}
-      <nav className="bg-[#1E293B] backdrop-blur-sm py-2 border-b border-slate-700/50">
+      <nav className="bg-[#1E293B] backdrop-blur-sm py-2 border-b border-slate-700/50 relative z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Main Navigation */}
@@ -291,7 +338,17 @@ const Header = () => {
                 dropdownKey="contact" 
                 items={dropdownMenus.contact} 
                 position="right"
+                
+
+          
               />
+                {/* ADD THE ABOUT US LINK HERE */}
+  <Link
+    href="/about"
+    className="text-slate-300 text-sm font-semibold hover:text-white transition-colors"
+  >
+    About us
+  </Link>
             </div>
 
             {/* Mobile Navigation Toggle */}

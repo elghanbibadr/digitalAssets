@@ -8,6 +8,8 @@ import {
   Filter,
   ChevronDown,
   ChevronUp,
+  Package,
+  LucidePackage,
 } from "lucide-react";
 
 const DomainBundles = () => {
@@ -226,22 +228,25 @@ const DomainBundles = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="space-y-4 text-center my-10">
-        <h1 className="font-display font-semibold text-6xl md:text-7xl lg:text-8xl text-slate-900 mb-8 leading-none">
-          <span className="block text-[#0F172A]">Domain Bundles</span>
+    <div className="min-h-screen">
+      <div className="space-y-4 text-center my-20 px-4">
+        <div className="inline-block bg-blue-400/20 text-blue-600 p-4 rounded-full mb-6">
+          <Package className="w-12 h-12"/>
+        </div>
+        <h1>
+         Domain Bundles
         </h1>
         <div className="max-w-4xl mx-auto">
-          <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="subtitle">
             Save big with curated domain packages. Get multiple premium domains
             at discounted rates, perfect for expanding your brand portfolio.
           </p>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex gap-8">
+      <div className="max-w-7xl mt-10 mx-auto px-4 py-8">
+        <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Filters */}
-          <div className="w-80 space-y-2">
+          <div className="lg:w-80 w-full space-y-2">
             <div className="bg-white rounded-lg shadow-sm">
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-4">
@@ -632,64 +637,20 @@ const DomainBundles = () => {
           {/* Main Content */}
           <div className="flex-1">
             {/* Header */}
-            <div className="flex items-center justify-between mb-6">
+            <div className="mb-6">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                  Search Domains
-                </h1>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  Available Bundles
+                </h2>
                 <p className="text-gray-600">
-                  Showing {sortedDomains.length} results
+                  Showing {sortedDomains.length} bundles
                 </p>
-              </div>
-
-              <div className="flex items-center gap-4">
-                {/* View Toggle */}
-                <div className="flex bg-white rounded-lg border p-1">
-                  <button
-                    onClick={() => setViewMode("grid")}
-                    className={`p-2 rounded ${
-                      viewMode === "grid"
-                        ? "bg-black text-white"
-                        : "text-gray-600"
-                    }`}
-                  >
-                    <Grid className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => setViewMode("list")}
-                    className={`p-2 rounded ${
-                      viewMode === "list"
-                        ? "bg-black text-white"
-                        : "text-gray-600"
-                    }`}
-                  >
-                    <List className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Sort Dropdown */}
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-                >
-                  <option value="newest">Newest</option>
-                  <option value="price-low">Price: Low to High</option>
-                  <option value="price-high">Price: High to Low</option>
-                  <option value="length">Domain Length</option>
-                </select>
               </div>
             </div>
 
             {/* Domain Grid */}
-            <div
-              className={`grid gap-6 ${
-                viewMode === "grid"
-                  ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                  : "grid-cols-1"
-              }`}
-            >
-              {sortedDomains.map((domain, index) => (
+            <div className="grid gap-6 grid-cols-1">
+              {sortedDomains.length > 0 && sortedDomains.map((domain, index) => (
                 <div
                   key={index}
                   className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
@@ -747,6 +708,17 @@ const DomainBundles = () => {
                   </div>
                 </div>
               ))}
+              {sortedDomains.length === 0 && (
+                <div className="flex flex-col items-center justify-center min-h-96 py-16 px-4">
+                  <div className="w-20 mx-auto h-20 mb-6">
+                    <LucidePackage className="h-20 w-20 text-slate-400" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No bundles found</h3>
+                  <p className="text-gray-600 text-center">
+                    Try adjusting your filters to see more results.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

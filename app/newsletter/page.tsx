@@ -1,11 +1,11 @@
 "use client"
-import { useState } from 'react';
+import { EventHandler, useState } from 'react';
 import { Mail, ArrowRight } from 'lucide-react';
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
     // Handle newsletter signup logic here
     console.log('Newsletter signup:', email);

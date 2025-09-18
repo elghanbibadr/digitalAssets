@@ -12,18 +12,18 @@ const Home = () => {
             <div className="space-y-8">
               {/* Main Heading */}
               <div className="space-y-4">
-                <h1 className="font-display font-semibold text-6xl md:text-7xl lg:text-8xl text-slate-900 mb-8 leading-none">
+                <h1 className="">
                   <span className="block text-[#0F172A]">Premium</span>
                   <span className="block text-[#DFA928] ">Domains</span>
                 </h1>
               </div>
 
               {/* Subtitle */}
-              <div className="max-w-4xl mx-auto">
-                <p className="text-base font-thin md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+              <div className="max-w-4xl subtitle mx-auto">
+                  <span className=" block">
                   Discover premium domain names that define the future of
                   digital real estate. Your perfect digital address awaits.
-                </p>
+                </span>
               </div>
             </div>
           </div>

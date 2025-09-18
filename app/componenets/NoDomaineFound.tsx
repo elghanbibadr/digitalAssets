@@ -7,7 +7,7 @@ export default function NoDomainsFound() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="">
       {/* Header */}
       <div className="px-4 py-6 sm:px-6 lg:px-8 ">
         <h1 className="text-3xl font-bold text-gray-900">Featured Domains</h1>
@@ -17,17 +17,17 @@ export default function NoDomainsFound() {
       <div className="flex flex-col items-center justify-center px-4 py-16 text-center min-h-96">
         {/* Settings/Filter Icon */}
         <div className="mb-8">
-          <div className="relative">
-            <SlidersHorizontal className="h-24 w-24 text-gray-300 mx-auto" />
+          <div className="relative w-24 h-24 bg-slate-200/40 rounded-full flex items-center justify-center mx-auto mb-6">
+            <SlidersHorizontal className="w-12 h-12 text-slate-400" />
             {/* Decorative lines to represent filters */}
            
           </div>
         </div>
 
         {/* No Domains Message */}
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+        <h3 className='font-semibold text-2xl text-slate-900 mb-4' >
           No domains found
-        </h2>
+        </h3>
 
         {/* Description */}
         <p className="text-gray-600 max-w-md mb-8 leading-relaxed">
