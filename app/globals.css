@@ -45,7 +45,7 @@ body{
 
 @layer components {
   .subtitle {
-    @apply text-lg md:text-xl text-slate-600 max-w-3xl mx-auto;
+    @apply text-lg font-normal md:text-xl text-slate-600 max-w-3xl mx-auto;
   }
 }
 

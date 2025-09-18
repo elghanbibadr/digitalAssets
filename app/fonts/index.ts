@@ -13,7 +13,7 @@ export const amazonEmber = localFont({
       style: 'normal',
     },
     {
-      path: '../../public/amazon-ember/Amazon Ember Display Medium.ttf',
+      path: '../../public/amazon-ember/Amazon Ember Medium.ttf',
       weight: '500',
       style: 'normal',
     },
