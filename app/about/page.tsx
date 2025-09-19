@@ -7,10 +7,10 @@ export default function AboutUsPage() {
       {/* Hero Section */}
       <section className="relative bg-slate-900 text-white py-24 md:py-32">
         <div className="container mx-auto px-6 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-8 tracking-tight">
+          <h1 className="text-white">
             The Future of Digital Real Estate
           </h1>
-          <p className="text-xl md:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed">
+          <p className="subtitle text-slate-300 mb-8">
             We are building the premier platform for discovering, acquiring, and
             investing in high-value domain names.
           </p>
@@ -38,7 +38,7 @@ export default function AboutUsPage() {
                   estate. By combining human expertise with cutting-edge AI
                   technology, we streamline the way domains are sourced,
                   acquired, and monetized. Today, we showcase an exclusive
-                  portfolio of high-value domains. Tomorrow, we're building
+                  portfolio of high-value domains. Tomorrow, we&apos;re building
                   something bigger: a platform that will redefine how people
                   search for, trade, and build on domains at scale.
                 </p>
@@ -52,10 +52,10 @@ export default function AboutUsPage() {
       <section className="py-20 bg-gray-50">
         <div className=" mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6">
+            <h2 className="mb-5 text-3xl font-bold text-slate-800">
               Our Philosophy
             </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            <p className="text-slate-600">
               Simplicity, transparency, and forward-thinking are at our core.
             </p>
           </div>
@@ -63,10 +63,10 @@ export default function AboutUsPage() {
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Purpose-Driven */}
             <div className="text-center bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
-              <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20  rounded-full flex items-center justify-center mx-auto mb-6">
                 <Target className="w-10 h-10 text-blue-600" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-800 mb-4">
+              <h3 className="">
                 Purpose-Driven
               </h3>
               <p className="text-slate-600 leading-relaxed">
@@ -78,28 +78,28 @@ export default function AboutUsPage() {
 
             {/* Customer-Centric */}
             <div className="text-center bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20  rounded-full flex items-center justify-center mx-auto mb-6">
                 <Users className="w-10 h-10 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-800 mb-4">
+              <h3 className="">
                 Customer-Centric
               </h3>
               <p className="text-slate-600 leading-relaxed">
-                Whether you're an entrepreneur or a major brand, we're here to
+                Whether you&apos;re an entrepreneur or a major brand, we&apos;re here to
                 help you secure the digital assets that define your future.
               </p>
             </div>
 
             {/* Foundation for the Future */}
             <div className="text-center bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
-              <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20  rounded-full flex items-center justify-center mx-auto mb-6">
                 <Zap className="w-10 h-10 text-red-600" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-800 mb-4">
+              <h3 className="">
                 Foundation for the Future
               </h3>
               <p className="text-slate-600 leading-relaxed">
-                This is more than a portfolio. It's the foundation for the
+                This is more than a portfolio. It&apos;s the foundation for the
                 future of how digital real estate is built and traded.
               </p>
             </div>

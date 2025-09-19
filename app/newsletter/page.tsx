@@ -5,7 +5,7 @@ import { Mail, ArrowRight } from 'lucide-react';
 export default function NewsletterSignup() {
   const [email, setEmail] = useState('');
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> ) => {
     e.preventDefault();
     // Handle newsletter signup logic here
     console.log('Newsletter signup:', email);

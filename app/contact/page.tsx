@@ -16,7 +16,7 @@ const Contact = () => {
               Support Center
             </h1>
             <p className="subtitle">
-              We're here to help you make the most of your experience with Domain Parking. Our team 
+              We&apos;re here to help you make the most of your experience with Domain Parking. Our team 
               is ready to support you.
             </p>
           </div>
