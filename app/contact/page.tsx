@@ -1,5 +1,5 @@
 "use client"
-import { BarChart3, TrendingUp, DollarSign, Globe, Zap, Target, Mail, Phone, HelpCircle, Briefcase, Wrench, ChevronDown, Send } from 'lucide-react';
+import { DollarSign,  HelpCircle, Briefcase, Wrench, ChevronDown, Send } from 'lucide-react';
 import React, { useState } from 'react'
 
 const Contact = () => {

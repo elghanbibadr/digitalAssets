@@ -1,4 +1,4 @@
-import { Settings, SlidersHorizontal } from 'lucide-react';
+import {  SlidersHorizontal } from 'lucide-react';
 
 export default function NoDomainsFound() {
   const handleClearFilters = () => {

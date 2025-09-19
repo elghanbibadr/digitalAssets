@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { Target, Users, Zap, Handshake, Send, CheckCircle, TrendingUp } from 'lucide-react';
+import { Target, Users, Handshake, Send, TrendingUp } from 'lucide-react';
 
 export default function SellWithUsPage() {
   const [formData, setFormData] = useState({

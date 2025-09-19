@@ -1,10 +1,8 @@
 "use client";
 import React, { useState, useMemo } from "react";
 import {
-  Search,
   Eye,
-  Grid,
-  List,
+
   Filter,
   ChevronDown,
   ChevronUp,

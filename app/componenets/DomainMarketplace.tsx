@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useMemo } from 'react';
-import { Search, Eye, Grid, List, Filter, ChevronDown, ChevronUp } from 'lucide-react';
+import {  Eye, Grid, List, Filter, ChevronDown, ChevronUp } from 'lucide-react';
 
 const DomainMarketplace = () => {
   const [viewMode, setViewMode] = useState('grid');
@@ -277,13 +279,14 @@ const DomainMarketplace = () => {
   }, [filteredDomains, sortBy]);
 
   // Helper functions
-  const toggleSelection = (array, setArray, item, isAll = false) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const toggleSelection = (array:any, setArray:any, item:any, isAll = false) => {
     if (isAll) {
       setArray(['all']);
     } else {
-      const newArray = array.filter(t => t !== 'all');
+      const newArray = array.filter((t:any) => t !== 'all');
       if (newArray.includes(item)) {
-        const filtered = newArray.filter(t => t !== item);
+        const filtered = newArray.filter((t:any) => t !== item);
         setArray(filtered.length ? filtered : ['all']);
       } else {
         setArray([...newArray, item]);
@@ -291,14 +294,15 @@ const DomainMarketplace = () => {
     }
   };
 
-  const toggleSection = (section) => {
+  const toggleSection = (section:any) => {
     setExpandedSections(prev => ({
       ...prev,
+      // @ts-expect-error
       [section]: !prev[section]
     }));
   };
 
-  const formatPrice = (price) => {
+  const formatPrice = (price:any) => {
     if (price >= 1000000) return `$${(price / 1000000).toFixed(1)}M`;
     if (price >= 1000) return `$${(price / 1000).toFixed(0)}K`;
     return `$${price}`;

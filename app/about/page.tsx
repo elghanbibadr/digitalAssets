@@ -1,5 +1,5 @@
 import React from "react";
-import { Target, Users, Zap, ArrowRight } from "lucide-react";
+import { Target, Users, Zap } from "lucide-react";
 
 export default function AboutUsPage() {
   return (
