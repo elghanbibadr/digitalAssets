@@ -1,33 +1,62 @@
 "use client";
+
 import React, { useState, useMemo } from "react";
 import {
   Eye,
-
   Filter,
   ChevronDown,
   ChevronUp,
   Package,
-  LucidePackage,
 } from "lucide-react";
 
-const DomainBundles = () => {
-  const [viewMode, setViewMode] = useState("grid");
-  const [sortBy, setSortBy] = useState("newest");
+// Type definitions
+interface Domain {
+  name: string;
+  price: number;
+  length: number;
+  category: string;
+  extension: string;
+  listingType: string;
+  onSale: boolean;
+  keywords: string[];
+  logo: string;
+  bgColor: string;
+}
+
+interface FilterOption {
+  key: string;
+  label: string;
+}
+
+interface ExpandedSections {
+  listingType: boolean;
+  characterType: boolean;
+  misspelledWords: boolean;
+  keywords: boolean;
+  extension: boolean;
+  onSale: boolean;
+  category: boolean;
+  priceRange: boolean;
+  domainLength: boolean;
+}
+
+const DomainBundles: React.FC = () => {
+  const [sortBy, setSortBy] = useState<string>("newest");
 
   // Filter states
-  const [onSale, setOnSale] = useState(true);
-  const [selectedListingTypes, setSelectedListingTypes] = useState(["all"]);
-  const [selectedCharacterTypes, setSelectedCharacterTypes] = useState(["any"]);
-  const [selectedCategories, setSelectedCategories] = useState(["all"]);
-  const [selectedExtensions, setSelectedExtensions] = useState(["all"]);
-  const [includeMisspelled, setIncludeMisspelled] = useState(false);
-  const [priceRange, setPriceRange] = useState([0, 1000000]);
-  const [domainLength, setDomainLength] = useState([1, 50]);
-  const [mustInclude, setMustInclude] = useState("");
-  const [mustNotInclude, setMustNotInclude] = useState("");
+  const [onSale, setOnSale] = useState<boolean>(true);
+  const [selectedListingTypes, setSelectedListingTypes] = useState<string[]>(["all"]);
+  const [selectedCharacterTypes, setSelectedCharacterTypes] = useState<string[]>(["any"]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(["all"]);
+  const [selectedExtensions, setSelectedExtensions] = useState<string[]>(["all"]);
+  const [includeMisspelled, setIncludeMisspelled] = useState<boolean>(false);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
+  const [domainLength, setDomainLength] = useState<[number, number]>([1, 50]);
+  const [mustInclude, setMustInclude] = useState<string>("");
+  const [mustNotInclude, setMustNotInclude] = useState<string>("");
 
   // Dropdown states
-  const [expandedSections, setExpandedSections] = useState({
+  const [expandedSections, setExpandedSections] = useState<ExpandedSections>({
     listingType: true,
     characterType: true,
     misspelledWords: true,
@@ -39,11 +68,36 @@ const DomainBundles = () => {
     domainLength: true,
   });
 
-  // Hardcoded domain data with more comprehensive data for filtering
-  const allDomains: any = [];
+  // Sample domain data - replace with actual data
+  const allDomains: Domain[] = [
+    {
+      name: "TechStartup.com",
+      price: 50000,
+      length: 11,
+      category: "technology",
+      extension: ".com",
+      listingType: "buy-now",
+      onSale: true,
+      keywords: ["tech", "startup", "business"],
+      logo: "🚀",
+      bgColor: "bg-blue-100"
+    },
+    {
+      name: "HealthHub.io",
+      price: 25000,
+      length: 9,
+      category: "health-wellness",
+      extension: ".io",
+      listingType: "make-offer",
+      onSale: false,
+      keywords: ["health", "wellness", "hub"],
+      logo: "🏥",
+      bgColor: "bg-green-100"
+    }
+  ];
 
   // Filter options
-  const listingTypes = [
+  const listingTypes: FilterOption[] = [
     { key: "all", label: "All Types" },
     { key: "buy-now", label: "Buy Now" },
     { key: "make-offer", label: "Make Offer" },
@@ -51,14 +105,14 @@ const DomainBundles = () => {
     { key: "lease-to-own", label: "Lease to Own" },
   ];
 
-  const characterTypes = [
+  const characterTypes: FilterOption[] = [
     { key: "any", label: "Any" },
     { key: "letters-only", label: "Letters Only" },
     { key: "numbers-only", label: "Numbers Only" },
     { key: "alphanumeric", label: "Alphanumeric" },
   ];
 
-  const categories = [
+  const categories: FilterOption[] = [
     { key: "all", label: "All Categories" },
     { key: "auto-automotive", label: "Auto & Automotive" },
     { key: "fishing-marine", label: "Fishing & Marine" },
@@ -71,7 +125,7 @@ const DomainBundles = () => {
     { key: "classified-listings", label: "Classified & Listings" },
   ];
 
-  const extensions = [
+  const extensions: FilterOption[] = [
     { key: "all", label: "All Extensions" },
     { key: ".com", label: ".com" },
     { key: ".io", label: ".io" },
@@ -114,7 +168,7 @@ const DomainBundles = () => {
         return false;
       }
 
-      // Character Type filter (simplified logic)
+      // Character Type filter
       if (!selectedCharacterTypes.includes("any")) {
         const domainName = domain.name.split(".")[0].toLowerCase();
         const hasNumbers = /\d/.test(domainName);
@@ -170,6 +224,7 @@ const DomainBundles = () => {
       return true;
     });
   }, [
+    allDomains,
     onSale,
     selectedListingTypes,
     selectedCategories,
@@ -198,7 +253,12 @@ const DomainBundles = () => {
   }, [filteredDomains, sortBy]);
 
   // Helper functions
-  const toggleSelection = (array, setArray, item, isAll = false) => {
+  const toggleSelection = (
+    array: string[],
+    setArray: React.Dispatch<React.SetStateAction<string[]>>,
+    item: string,
+    isAll: boolean = false
+  ) => {
     if (isAll) {
       setArray(["all"]);
     } else {
@@ -212,35 +272,76 @@ const DomainBundles = () => {
     }
   };
 
-  const toggleSection = (section) => {
+  const toggleSection = (section: keyof ExpandedSections) => {
     setExpandedSections((prev) => ({
       ...prev,
       [section]: !prev[section],
     }));
   };
 
-  const formatPrice = (price) => {
+  const formatPrice = (price: number): string => {
     if (price >= 1000000) return `$${(price / 1000000).toFixed(1)}M`;
     if (price >= 1000) return `$${(price / 1000).toFixed(0)}K`;
     return `$${price}`;
   };
 
+  const SectionHeader: React.FC<{
+    title: string;
+    section: keyof ExpandedSections;
+    onClick: () => void;
+    isExpanded: boolean;
+  }> = ({ title, onClick, isExpanded }) => (
+    <button
+      onClick={onClick}
+      className="flex items-center justify-between w-full text-left"
+    >
+      <h4 className="font-semibold text-gray-900">{title}</h4>
+      {isExpanded ? (
+        <ChevronUp className="w-4 h-4" />
+      ) : (
+        <ChevronDown className="w-4 h-4" />
+      )}
+    </button>
+  );
+
+  const ToggleSwitch: React.FC<{
+    checked: boolean;
+    onChange: () => void;
+    label?: string;
+  }> = ({ checked, onChange, label }) => (
+    <div className="flex items-center gap-3">
+      <button
+        onClick={onChange}
+        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+          checked ? "bg-black" : "bg-gray-200"
+        }`}
+      >
+        <span
+          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+            checked ? "translate-x-6" : "translate-x-1"
+          }`}
+        />
+      </button>
+      {label && <span className="text-sm text-gray-600">{label}</span>}
+    </div>
+  );
+
   return (
     <div className="min-h-screen">
+      {/* Header Section */}
       <div className="space-y-4 text-center my-20 px-4">
         <div className="inline-block bg-blue-400/20 text-blue-600 p-4 rounded-full mb-6">
-          <Package className="w-12 h-12"/>
+          <Package className="w-12 h-12" />
         </div>
-        <h1>
-         Domain Bundles
-        </h1>
+        <h1 className="text-4xl font-bold text-gray-900">Domain Bundles</h1>
         <div className="max-w-4xl mx-auto">
-          <p className="subtitle">
+          <p className="text-lg text-gray-600">
             Save big with curated domain packages. Get multiple premium domains
             at discounted rates, perfect for expanding your brand portfolio.
           </p>
         </div>
       </div>
+
       <div className="max-w-7xl mt-10 mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Filters */}
@@ -249,41 +350,24 @@ const DomainBundles = () => {
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <Filter className="w-5 h-5 text-gray-600" />
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Filters
-                  </h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
                 </div>
 
                 {/* On Sale */}
                 <div className="border-b border-gray-200 pb-4 mb-4">
-                  <button
+                  <SectionHeader
+                    title="On Sale"
+                    section="onSale"
                     onClick={() => toggleSection("onSale")}
-                    className="flex items-center justify-between w-full text-left"
-                  >
-                    <h4 className="font-semibold text-gray-900">On Sale</h4>
-                    {expandedSections.onSale ? (
-                      <ChevronUp className="w-4 h-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
+                    isExpanded={expandedSections.onSale}
+                  />
                   {expandedSections.onSale && (
                     <div className="mt-3">
-                      <div className="flex items-center gap-3">
-                        <button
-                          onClick={() => setOnSale(!onSale)}
-                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                            onSale ? "bg-black" : "bg-gray-200"
-                          }`}
-                        >
-                          <span
-                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                              onSale ? "translate-x-6" : "translate-x-1"
-                            }`}
-                          />
-                        </button>
-                        <span className="text-sm text-gray-600">Yes</span>
-                      </div>
+                      <ToggleSwitch
+                        checked={onSale}
+                        onChange={() => setOnSale(!onSale)}
+                        label="Yes"
+                      />
                       <p className="text-xs text-gray-500 mt-1">
                         Find domains at discounted prices
                       </p>
@@ -293,17 +377,12 @@ const DomainBundles = () => {
 
                 {/* By Category */}
                 <div className="border-b border-gray-200 pb-4 mb-4">
-                  <button
+                  <SectionHeader
+                    title="By Category"
+                    section="category"
                     onClick={() => toggleSection("category")}
-                    className="flex items-center justify-between w-full text-left"
-                  >
-                    <h4 className="font-semibold text-gray-900">By Category</h4>
-                    {expandedSections.category ? (
-                      <ChevronUp className="w-4 h-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
+                    isExpanded={expandedSections.category}
+                  />
                   {expandedSections.category && (
                     <div className="mt-3 space-y-2 max-h-48 overflow-y-auto">
                       {categories.map((category) => (
@@ -335,19 +414,12 @@ const DomainBundles = () => {
 
                 {/* Listing Type */}
                 <div className="border-b border-gray-200 pb-4 mb-4">
-                  <button
+                  <SectionHeader
+                    title="Listing Type"
+                    section="listingType"
                     onClick={() => toggleSection("listingType")}
-                    className="flex items-center justify-between w-full text-left"
-                  >
-                    <h4 className="font-semibold text-gray-900">
-                      Listing Type
-                    </h4>
-                    {expandedSections.listingType ? (
-                      <ChevronUp className="w-4 h-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
+                    isExpanded={expandedSections.listingType}
+                  />
                   {expandedSections.listingType && (
                     <div className="mt-3 space-y-2">
                       {listingTypes.map((type) => (
@@ -379,19 +451,12 @@ const DomainBundles = () => {
 
                 {/* Character Type */}
                 <div className="border-b border-gray-200 pb-4 mb-4">
-                  <button
+                  <SectionHeader
+                    title="Character Type"
+                    section="characterType"
                     onClick={() => toggleSection("characterType")}
-                    className="flex items-center justify-between w-full text-left"
-                  >
-                    <h4 className="font-semibold text-gray-900">
-                      Character Type
-                    </h4>
-                    {expandedSections.characterType ? (
-                      <ChevronUp className="w-4 h-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
+                    isExpanded={expandedSections.characterType}
+                  />
                   {expandedSections.characterType && (
                     <div className="mt-3 space-y-2">
                       {characterTypes.map((type) => (
@@ -423,59 +488,31 @@ const DomainBundles = () => {
 
                 {/* Misspelled Words */}
                 <div className="border-b border-gray-200 pb-4 mb-4">
-                  <button
+                  <SectionHeader
+                    title="Misspelled Words"
+                    section="misspelledWords"
                     onClick={() => toggleSection("misspelledWords")}
-                    className="flex items-center justify-between w-full text-left"
-                  >
-                    <h4 className="font-semibold text-gray-900">
-                      Misspelled Words
-                    </h4>
-                    {expandedSections.misspelledWords ? (
-                      <ChevronUp className="w-4 h-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
+                    isExpanded={expandedSections.misspelledWords}
+                  />
                   {expandedSections.misspelledWords && (
                     <div className="mt-3">
-                      <label className="flex items-center gap-3 cursor-pointer">
-                        <button
-                          onClick={() =>
-                            setIncludeMisspelled(!includeMisspelled)
-                          }
-                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                            includeMisspelled ? "bg-black" : "bg-gray-200"
-                          }`}
-                        >
-                          <span
-                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                              includeMisspelled
-                                ? "translate-x-6"
-                                : "translate-x-1"
-                            }`}
-                          />
-                        </button>
-                        <span className="text-sm text-gray-700">
-                          Include misspelled domains
-                        </span>
-                      </label>
+                      <ToggleSwitch
+                        checked={includeMisspelled}
+                        onChange={() => setIncludeMisspelled(!includeMisspelled)}
+                        label="Include misspelled domains"
+                      />
                     </div>
                   )}
                 </div>
 
                 {/* Keywords */}
                 <div className="border-b border-gray-200 pb-4 mb-4">
-                  <button
+                  <SectionHeader
+                    title="Keywords"
+                    section="keywords"
                     onClick={() => toggleSection("keywords")}
-                    className="flex items-center justify-between w-full text-left"
-                  >
-                    <h4 className="font-semibold text-gray-900">Keywords</h4>
-                    {expandedSections.keywords ? (
-                      <ChevronUp className="w-4 h-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
+                    isExpanded={expandedSections.keywords}
+                  />
                   {expandedSections.keywords && (
                     <div className="mt-3 space-y-3">
                       <div>
@@ -514,17 +551,12 @@ const DomainBundles = () => {
 
                 {/* Extension */}
                 <div className="border-b border-gray-200 pb-4 mb-4">
-                  <button
+                  <SectionHeader
+                    title="Extension"
+                    section="extension"
                     onClick={() => toggleSection("extension")}
-                    className="flex items-center justify-between w-full text-left"
-                  >
-                    <h4 className="font-semibold text-gray-900">Extension</h4>
-                    {expandedSections.extension ? (
-                      <ChevronUp className="w-4 h-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
+                    isExpanded={expandedSections.extension}
+                  />
                   {expandedSections.extension && (
                     <div className="mt-3 space-y-2 max-h-48 overflow-y-auto">
                       {extensions.map((ext) => (
@@ -556,17 +588,12 @@ const DomainBundles = () => {
 
                 {/* Price Range */}
                 <div className="border-b border-gray-200 pb-4 mb-4">
-                  <button
+                  <SectionHeader
+                    title="Price Range"
+                    section="priceRange"
                     onClick={() => toggleSection("priceRange")}
-                    className="flex items-center justify-between w-full text-left"
-                  >
-                    <h4 className="font-semibold text-gray-900">Price Range</h4>
-                    {expandedSections.priceRange ? (
-                      <ChevronUp className="w-4 h-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
+                    isExpanded={expandedSections.priceRange}
+                  />
                   {expandedSections.priceRange && (
                     <div className="mt-3">
                       <div className="flex justify-between text-sm text-gray-600 mb-2">
@@ -582,7 +609,7 @@ const DomainBundles = () => {
                         onChange={(e) =>
                           setPriceRange([0, parseInt(e.target.value)])
                         }
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                       />
                       <div className="text-sm text-gray-600 mt-2 text-center">
                         Up to {formatPrice(priceRange[1])}
@@ -593,19 +620,12 @@ const DomainBundles = () => {
 
                 {/* Domain Length */}
                 <div className="pb-4">
-                  <button
+                  <SectionHeader
+                    title="Domain Length"
+                    section="domainLength"
                     onClick={() => toggleSection("domainLength")}
-                    className="flex items-center justify-between w-full text-left"
-                  >
-                    <h4 className="font-semibold text-gray-900">
-                      Domain Length
-                    </h4>
-                    {expandedSections.domainLength ? (
-                      <ChevronUp className="w-4 h-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
+                    isExpanded={expandedSections.domainLength}
+                  />
                   {expandedSections.domainLength && (
                     <div className="mt-3">
                       <div className="flex justify-between text-sm text-gray-600 mb-2">
@@ -620,7 +640,7 @@ const DomainBundles = () => {
                         onChange={(e) =>
                           setDomainLength([1, parseInt(e.target.value)])
                         }
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                       />
                       <div className="text-sm text-gray-600 mt-2 text-center">
                         {domainLength[0]} - {domainLength[1]} characters
@@ -636,82 +656,83 @@ const DomainBundles = () => {
           <div className="flex-1">
             {/* Header */}
             <div className="mb-6">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  Available Bundles
-                </h2>
-                <p className="text-gray-600">
-                  Showing {sortedDomains.length} bundles
-                </p>
-              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Available Bundles
+              </h2>
+              <p className="text-gray-600">
+                Showing {sortedDomains.length} bundles
+              </p>
             </div>
 
             {/* Domain Grid */}
             <div className="grid gap-6 grid-cols-1">
-              {sortedDomains.length > 0 && sortedDomains.map((domain, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                          {domain.name}
-                        </h3>
-                        <div className="flex gap-2 items-center">
-                          <span className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">
-                            {categories.find((c) => c.key === domain.category)
-                              ?.label || domain.category}
-                          </span>
-                          {domain.onSale && (
-                            <span className="inline-block px-2 py-1 text-xs bg-green-100 text-green-600 rounded">
-                              On Sale
+              {sortedDomains.length > 0 ? (
+                sortedDomains.map((domain, index) => (
+                  <div
+                    key={`${domain.name}-${index}`}
+                    className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                            {domain.name}
+                          </h3>
+                          <div className="flex gap-2 items-center">
+                            <span className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">
+                              {categories.find((c) => c.key === domain.category)
+                                ?.label || domain.category}
                             </span>
-                          )}
+                            {domain.onSale && (
+                              <span className="inline-block px-2 py-1 text-xs bg-green-100 text-green-600 rounded">
+                                On Sale
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                      <span className="text-lg font-bold text-gray-900">
-                        {formatPrice(domain.price)}
-                      </span>
-                    </div>
-
-                    {/* Logo/Icon Display */}
-                    <div
-                      className={`w-full h-32 ${domain.bgColor} rounded-lg mb-4 flex items-center justify-center text-4xl`}
-                    >
-                      {domain.logo}
-                    </div>
-
-                    {/* Domain Info */}
-                    <div className="mb-4 text-sm text-gray-600">
-                      <div className="flex justify-between">
-                        <span>Length: {domain.length} chars</span>
-                        <span>
-                          Type:{" "}
-                          {
-                            listingTypes.find(
-                              (t) => t.key === domain.listingType
-                            )?.label
-                          }
+                        <span className="text-lg font-bold text-gray-900">
+                          {formatPrice(domain.price)}
                         </span>
                       </div>
-                    </div>
 
-                    {/* Action Button */}
-                    <button className="w-full bg-slate-800 hover:bg-slate-900 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
-                      <Eye className="w-4 h-4" />
-                      Make Inquiry
-                    </button>
+                      {/* Logo/Icon Display */}
+                      <div
+                        className={`w-full h-32 ${domain.bgColor} rounded-lg mb-4 flex items-center justify-center text-4xl`}
+                      >
+                        {domain.logo}
+                      </div>
+
+                      {/* Domain Info */}
+                      <div className="mb-4 text-sm text-gray-600">
+                        <div className="flex justify-between">
+                          <span>Length: {domain.length} chars</span>
+                          <span>
+                            Type:{" "}
+                            {
+                              listingTypes.find(
+                                (t) => t.key === domain.listingType
+                              )?.label
+                            }
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Action Button */}
+                      <button className="w-full bg-slate-800 hover:bg-slate-900 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                        <Eye className="w-4 h-4" />
+                        Make Inquiry
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
-              {sortedDomains.length === 0 && (
+                ))
+              ) : (
                 <div className="flex flex-col items-center justify-center min-h-96 py-16 px-4">
                   <div className="w-20 mx-auto h-20 mb-6">
-                    <LucidePackage className="h-20 w-20 text-slate-400" />
+                    <Package className="h-20 w-20 text-slate-400" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No bundles found</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    No bundles found
+                  </h3>
                   <p className="text-gray-600 text-center">
                     Try adjusting your filters to see more results.
                   </p>
@@ -724,4 +745,5 @@ const DomainBundles = () => {
     </div>
   );
 };
+
 export default DomainBundles;

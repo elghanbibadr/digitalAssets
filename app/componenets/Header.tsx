@@ -1,24 +1,47 @@
-"use client"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
 import { Search, Menu, X, ShoppingCart, Heart, User, ChevronDown, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import logo from "@/public/logo.svg";
 
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
+// Type definitions
+interface DropdownItem {
+  label: string;
+  href: string;
+  description: string;
+  icon: React.ReactNode;
+}
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface DropdownMenus {
+  buy: DropdownItem[];
+  sell: DropdownItem[];
+  contact: DropdownItem[];
+}
+
+type DropdownKey = keyof DropdownMenus | null;
+
+const Header: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [activeDropdown, setActiveDropdown] = useState<DropdownKey>(null);
+
+  const toggleMenu = (): void => setIsMenuOpen(!isMenuOpen);
   
-  const toggleDropdown = (dropdown) => {
+  const toggleDropdown = (dropdown: keyof DropdownMenus): void => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
-  const closeDropdown = () => setActiveDropdown(null);
+  const closeDropdown = (): void => setActiveDropdown(null);
 
   // Enhanced navigation data with descriptions
-  const dropdownMenus = {
+  const dropdownMenus: DropdownMenus = {
     buy: [
       { 
         label: 'Premium domains marketplace', 
@@ -51,16 +74,16 @@ const Header = () => {
     ]
   };
 
-  const mainNavItems = [
+  const mainNavItems: NavItem[] = [
     { label: 'Park Domains', href: '/domainparking' },
   ];
 
-  const rightNavItems = [
+  const rightNavItems: NavItem[] = [
     { label: 'Newsletter', href: '/newsletter' },
   ];
 
   // Components
-  const Logo = () => (
+  const Logo: React.FC = () => (
     <Link href="/" className="flex items-center space-x-3">
       <div className="w-10 h-10 p-2 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center">
         <Image src={logo} alt="DigitalEstates logo" height={30} width={30} />
@@ -69,7 +92,7 @@ const Header = () => {
     </Link>
   );
 
-  const SearchBar = ({ className = "" }) => (
+  const SearchBar: React.FC<{ className?: string }> = ({ className = "" }) => (
     <div className={`relative ${className}`}>
       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
       <input
@@ -80,7 +103,7 @@ const Header = () => {
     </div>
   );
 
-  const LanguageSelector = () => (
+  const LanguageSelector: React.FC = () => (
     <div className="flex items-center space-x-1 cursor-pointer">
       <div className="w-6 h-4 bg-red-500 rounded-sm"></div>
       <span className="text-white text-sm">EN</span>
@@ -88,7 +111,7 @@ const Header = () => {
     </div>
   );
 
-  const UserActions = () => (
+  const UserActions: React.FC = () => (
     <div className="flex items-center space-x-4">
       <Link 
         href="/auth/login" 
@@ -111,13 +134,17 @@ const Header = () => {
     </div>
   );
 
-  const EnhancedDropdownMenu = ({ items, isOpen, position = "left" }) => {
+  const EnhancedDropdownMenu: React.FC<{
+    items: DropdownItem[];
+    isOpen: boolean;
+    position?: "left" | "right";
+  }> = ({ items, isOpen, position = "left" }) => {
     if (!isOpen) return null;
     
     const positionClass = position === "right" ? "right-10" : "-left-4";
     
     return (
-      <div className={`absolute top-full ${positionClass} z-50 min-w-[8rem] overflow-hidden text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 w-80 bg-white border border-slate-200 rounded-lg shadow-lg p-0`}>
+      <div className={`absolute top-full ${positionClass} z-50 min-w-[8rem] overflow-hidden text-popover-foreground w-80 bg-white border border-slate-200 rounded-lg shadow-lg p-0`}>
         <div className="py-3">
           {items.map((item, index) => (
             <Link
@@ -128,8 +155,8 @@ const Header = () => {
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <div className="flex items-center  mb-2">
-                    <h3 className="text-lg font-semibold text-gray-900  transition-colors">
+                  <div className="flex items-center mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900 transition-colors">
                       {item.label}
                     </h3>
                     <div className="text-black mx-2">
@@ -148,7 +175,12 @@ const Header = () => {
     );
   };
 
-  const NavDropdown = ({ label, dropdownKey, items, position = "left" }) => (
+  const NavDropdown: React.FC<{
+    label: string;
+    dropdownKey: keyof DropdownMenus;
+    items: DropdownItem[];
+    position?: "left" | "right";
+  }> = ({ label, dropdownKey, items, position = "left" }) => (
     <div className="relative">
       <button 
         onClick={() => toggleDropdown(dropdownKey)}
@@ -167,7 +199,7 @@ const Header = () => {
     </div>
   );
 
-  const MobileMenu = () => (
+  const MobileMenu: React.FC = () => (
     <div className="md:hidden bg-slate-800 border-t border-slate-700">
       <div className="px-4 py-2 space-y-2">
         <div className="flex items-center justify-between py-2">
@@ -200,7 +232,7 @@ const Header = () => {
               <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-2 py-1">
                 {key === 'buy' ? 'Buy Domains' : key === 'sell' ? 'Sell Domains' : 'Contact'}
               </div>
-              {items.map((item, index) => (
+              {items.map((item:any, index:number) => (
                 <div key={index} className="bg-slate-700/50 rounded-lg mx-2 mb-2">
                   <Link
                     href={item.href}
@@ -236,13 +268,22 @@ const Header = () => {
               {item.label}
             </Link>
           ))}
+
+          {/* About Us link for mobile */}
+          <Link
+            href="/about"
+            className="block py-2 px-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded transition-colors"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            About us
+          </Link>
         </div>
       </div>
     </div>
   );
 
   // Close dropdown when clicking outside
-  const handleOverlayClick = () => {
+  const handleOverlayClick = (): void => {
     if (activeDropdown) {
       closeDropdown();
     }
@@ -338,17 +379,15 @@ const Header = () => {
                 dropdownKey="contact" 
                 items={dropdownMenus.contact} 
                 position="right"
-                
-
-          
               />
-                {/* ADD THE ABOUT US LINK HERE */}
-  <Link
-    href="/about"
-    className="text-slate-300 text-sm font-semibold hover:text-white transition-colors"
-  >
-    About us
-  </Link>
+
+              {/* About Us Link */}
+              <Link
+                href="/about"
+                className="text-slate-300 text-sm font-semibold hover:text-white transition-colors"
+              >
+                About us
+              </Link>
             </div>
 
             {/* Mobile Navigation Toggle */}
@@ -356,6 +395,7 @@ const Header = () => {
               <button 
                 className="text-slate-300 hover:text-white"
                 aria-label="Mobile navigation menu"
+                onClick={toggleMenu}
               >
                 <Menu className="w-5 h-5" />
               </button>
