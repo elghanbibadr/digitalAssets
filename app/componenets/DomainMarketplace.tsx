@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useMemo, useEffect } from 'react';
 import { Eye, Grid, List, Filter, ChevronDown, ChevronUp, Loader2, AlertCircle } from 'lucide-react';
 
@@ -48,7 +49,6 @@ const DomainMarketplace = () => {
   const [selectedCharacterTypes, setSelectedCharacterTypes] = useState<string[]>(['any']);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['all']);
   const [selectedExtensions, setSelectedExtensions] = useState<string[]>(['all']);
-  const [includeMisspelled, setIncludeMisspelled] = useState<boolean>(false);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
   const [domainLength, setDomainLength] = useState<[number, number]>([1, 50]);
   const [mustInclude, setMustInclude] = useState<string>('');

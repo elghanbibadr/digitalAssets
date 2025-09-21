@@ -4,9 +4,7 @@ import {
   TrendingUp,
   DollarSign,
   Globe,
-  Zap,
-  Target,
-  ArrowLeft,
+
   ArrowRight,
 } from "lucide-react";
 
