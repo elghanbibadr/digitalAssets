@@ -68,63 +68,71 @@ const DomainMarketplace = () => {
   });
 
   // Fetch ALL domains from Strapi with pagination
-  useEffect(() => {
-    const fetchAllDomains = async () => {
-      try {
-        setLoading(true);
-        const allDomains: Domain[] = [];
-        let page = 1;
-        const pageSize = 100; // Fetch 100 at a time for efficiency
-        let hasMore = true;
+useEffect(() => {
+  const fetchAllDomains = async () => {
+    try {
+      setLoading(true);
+      const allDomains: Domain[] = [];
+      let page = 1;
+      const pageSize = 100; // Fetch 100 at a time for efficiency
+      let hasMore = true;
 
-        while (hasMore) {
-          const response = await fetch(
-            `http://localhost:1337/api/domains?pagination[page]=${page}&pagination[pageSize]=${pageSize}`
-          );
-          
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          
-          const data = await response.json();
-          
-          // Transform Strapi data to component format
-          const transformedDomains: Domain[] = data.data.map((domain: any) => ({
-            id: domain.id,
-            name: domain.name,
-            description: domain.description || '',
-            category: domain.category,
-            price: domain.price || 0,
-            length: domain.length,
-            extension: domain.extension,
-            listingType: domain.listingType,
-            onSale: domain.onSale,
-            keywords: domain.keywords || [],
-            logo: domain.logo || generatePlaceholderLogo(domain.name),
-            bgColor: generateBgColor(domain.category)
-          }));
-          
-          allDomains.push(...transformedDomains);
-          
-          // Check if we have more pages
-          const { pagination } = data.meta;
-          hasMore = page < pagination.pageCount;
-          page++;
+      while (hasMore) {
+        const response = await fetch(
+          `https://brave-dinosaurs-fbc9ee48db.strapiapp.com/api/domains?pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=logo`
+        );
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        console.log(`Fetched ${allDomains.length} domains total`);
-        setDomains(allDomains);
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching domains:', err);
-        setError('Failed to load domains. Please check if Strapi is running on http://localhost:1337');
-      } finally {
-        setLoading(false);
-      }
-    };
+        const data = await response.json();
+        
+        console.log('data', data);
+        
+        // Transform Strapi data to component format
+        const transformedDomains: Domain[] = data.data.map((domain: any) => ({
+          id: domain.id,
+          name: domain.name,
+          description: domain.description || '',
+          category: domain.category,
+          price: domain.price || 0,
+          length: domain.length,
+          extension: domain.extension,
+          listingType: domain.listingType,
+          onSale: domain.onSale,
+          keywords: domain.keywords || [],
+          logo: domain.logo?.url || generatePlaceholderLogo(domain.name),
+          bgColor: generateBgColor(domain.category)
+        }));
+        
+        allDomains.push(...transformedDomains);
+  console.log('all domaine',allDomains)
 
-    fetchAllDomains();
-  }, []);
+
+        const finded = allDomains.find(domaine => domaine.id === 191); // Changed to 191 based on your data
+        console.log('finded', finded);
+        
+        // Check if we have more pages
+        const { pagination } = data.meta;
+        hasMore = page < pagination.pageCount;
+        page++;
+      }
+      
+      console.log(`Fetched ${allDomains.length} domains total`);
+      setDomains(allDomains);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching domains:', err);
+      setError('Failed to load domains. Please check your Strapi connection.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  fetchAllDomains();
+}, []);
 
   // Helper function to generate placeholder logo
   const generatePlaceholderLogo = (domainName: string): string => {
@@ -678,8 +686,8 @@ const DomainMarketplace = () => {
                     </div>
 
                     {/* Logo/Icon Display */}
-                    <div className="bg-black w-[200px] h-20 rounded-lg mb-4 flex items-center justify-center text-4xl">
-                      {/* Logo placeholder */}
+                    <div className="  rounded-lg mb-4 flex items-center justify-center text-4xl">
+                    <img src={domain.logo} />
                     </div>
 
                     {/* Domain Info */}
