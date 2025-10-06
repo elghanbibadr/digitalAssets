@@ -90,27 +90,27 @@ useEffect(() => {
         
         console.log('data', data);
         
-        // Transform Strapi data to component format
-        const transformedDomains: Domain[] = data.data.map((domain: any) => ({
-          id: domain.id,
-          name: domain.name,
-          description: domain.description || '',
-          category: domain.category,
-          price: domain.price || 0,
-          length: domain.length,
-          extension: domain.extension,
-          listingType: domain.listingType,
-          onSale: domain.onSale,
-          keywords: domain.keywords || [],
-          logo: domain.logo?.url || generatePlaceholderLogo(domain.name),
-          bgColor: generateBgColor(domain.category)
-        }));
+        // Transform Strapi data to component format, filtering out domains without logos
+        const transformedDomains: Domain[] = data.data
+          .filter((domain: any) => domain.logo?.url) // Only keep domains with logos
+          .map((domain: any) => ({
+            id: domain.id,
+            name: domain.name,
+            description: domain.description || '',
+            category: domain.category,
+            price: domain.price || 0,
+            length: domain.length,
+            extension: domain.extension,
+            listingType: domain.listingType,
+            onSale: domain.onSale,
+            keywords: domain.keywords || [],
+            logo: domain.logo.url,
+            bgColor: generateBgColor(domain.category)
+          }));
         
         allDomains.push(...transformedDomains);
-  console.log('all domaine',allDomains)
 
-
-        const finded = allDomains.find(domaine => domaine.id === 191); // Changed to 191 based on your data
+        const finded = allDomains.find(domaine => domaine.id === 191);
         console.log('finded', finded);
         
         // Check if we have more pages
@@ -119,7 +119,7 @@ useEffect(() => {
         page++;
       }
       
-      console.log(`Fetched ${allDomains.length} domains total`);
+      console.log(`Fetched ${allDomains.length} domains with logos total`);
       setDomains(allDomains);
       setError(null);
     } catch (err) {
@@ -129,7 +129,6 @@ useEffect(() => {
       setLoading(false);
     }
   };
-
 
   fetchAllDomains();
 }, []);
